@@ -93,7 +93,7 @@ namespace MonoTorrent.Connections.Tracker
                             var peerDict = new Dictionary<InfoHash, IList<PeerInfo>> { { infoHash, announce.Peers } };
                             announceResponse = new AnnounceResponse (TrackerState.Ok, peerDict, minUpdateInterval: announce.Interval);
                         } else {
-                            announceResponse.Peers[infoHash] = announce.Peers; 
+                            announceResponse.Peers[infoHash] = announce.Peers;
                         }
                     } else {
                         throw new NotSupportedException ($"There was no error and no {nameof (AnnounceResponseMessage)} was received");
@@ -168,7 +168,7 @@ namespace MonoTorrent.Connections.Tracker
                 throw new TrackerException (errorString);
             } else if (rawResponse is ConnectResponseMessage response) {
                 // Reset the timer after we receive the response so we get maximum benefit from our
-                // 2 minute allowance to use the connection id. 
+                // 2 minute allowance to use the connection id.
                 LastConnected.Restart ();
                 return response.ConnectionId;
             } else {
@@ -230,7 +230,7 @@ namespace MonoTorrent.Connections.Tracker
             ReadOnlyMemory<byte> buffer = msg.Encode ();
             try {
                 do {
-                    client.Send (buffer, buffer.Length);
+                    await client.SendAsync (buffer, token);
                     await Task.Delay (RetryDelay, token);
                 }
                 while (!token.IsCancellationRequested);
