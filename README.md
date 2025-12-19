@@ -1,6 +1,8 @@
 MonoTorrent
 ========
 
+This package contains some bug fixes to be compatible with ncore. To build the dlls for Torri go to src/MonoTorrent.Client/ and run: dotnet publish -o out. Then copy the dlls from the out folder.
+
 ![Nuget](https://img.shields.io/nuget/v/MonoTorrent?label=stable) ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/MonoTorrent?label=Pre-release) ![Nuget](https://img.shields.io/nuget/dt/MonoTorrent)
  
 ![Build status (master)](https://img.shields.io/azure-devops/build/alanmcgovern0144/monotorrent/7/master?label=build%20status%20%28master%29) ![Test Status (master)](https://img.shields.io/azure-devops/tests/alanmcgovern0144/monotorrent/7/master?compact_message&label=test%20status%20%28master%29) ![code coverage (master)](https://img.shields.io/azure-devops/coverage/alanmcgovern0144/monotorrent/7/master?label=code%20coverage%20%28master%29)
