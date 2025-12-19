@@ -178,6 +178,7 @@ namespace MonoTorrent.Client
 
                 var state = new AsyncConnectState (manager, connection, ValueStopwatch.StartNew ());
                 try {
+                    Interlocked.Increment (ref openConnections);
                     PendingConnects.Add (state);
 
                     // A return value of 'null' means connection succeeded
@@ -191,6 +192,7 @@ namespace MonoTorrent.Client
                 }
 
                 // If the connection did not succeed, dispose the object and try again with a different encryption tier.
+                Interlocked.Decrement (ref openConnections);
                 connection.SafeDispose ();
 
                 // If the error is *not* a retryable error, then bail out and return the failure.
@@ -238,9 +240,6 @@ namespace MonoTorrent.Client
 
         internal async ReusableTask<ConnectionFailureReason?> ProcessNewOutgoingConnection (TorrentManager manager, Peer peer, IPeerConnection connection, IList<EncryptionType> allowedEncryption)
         {
-            var bitfield = new BitField (manager.Bitfield.Length);
-            Interlocked.Increment (ref openConnections);
-
             IEncryption decryptor;
             IEncryption encryptor;
 
